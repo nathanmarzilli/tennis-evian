@@ -163,6 +163,11 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
+
+		/* Limite la galerie à 8 images par défaut */
+        #gallery-grid.gallery-collapsed > div:nth-child(n+9) {
+            display: none;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-optic-yellow selection:text-tennis-green-dark">
@@ -176,8 +181,9 @@
                     <div class="w-10 h-10 bg-optic-yellow rounded-full flex items-center justify-center text-tennis-green-dark text-xl custom-hover">
                         <i class="fa-solid fa-baseball"></i>
                     </div>
-                    <span class="font-display font-bold text-2xl tracking-tight">TC <span class="text-optic-yellow">ÉVIAN</span></span>
+                    <span class="font-display font-bold text-2xl tracking-tight hidden sm:block">TC <span class="text-optic-yellow">ÉVIAN</span></span>
                 </div>
+                
                 <div class="hidden lg:flex space-x-6 font-semibold text-sm">
                     <a href="#le-club" class="hover:text-optic-yellow transition">Le Club</a>
                     <a href="#equipe" class="hover:text-optic-yellow transition">L'Équipe</a>
@@ -185,15 +191,29 @@
                     <a href="#tarifs" class="hover:text-optic-yellow transition">Formules & Tarifs</a>
                     <a href="#live-courts" class="hover:text-clay-red transition flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-clay-red animate-pulse-fast"></span> Live</a>
                 </div>
-                <div class="hidden md:flex">
-                    <a href="https://tenup.fft.fr/club/50740059" target="_blank" class="custom-hover bg-optic-yellow text-tennis-green-dark px-6 py-2 rounded-full font-bold hover:bg-optic-yellow-hover hover:scale-105 transition shadow-[0_0_15px_rgba(223,255,0,0.3)]">
-                        Adhérer au club
+                
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <a href="https://tenup.fft.fr/club/50740059" target="_blank" class="custom-hover bg-optic-yellow text-tennis-green-dark px-4 py-2 sm:px-6 rounded-full font-bold hover:bg-optic-yellow-hover hover:scale-105 transition shadow-[0_0_15px_rgba(223,255,0,0.3)] text-sm sm:text-base">
+                        Adhérer <span class="hidden sm:inline">au club</span>
                     </a>
+                    
+                    <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl custom-hover focus:outline-none p-2 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
-    </nav>
 
+        <div id="mobile-menu" class="hidden lg:hidden bg-tennis-green-dark/95 border-t border-white/10 backdrop-blur-md absolute w-full shadow-2xl">
+            <div class="px-4 pt-2 pb-6 space-y-1 text-center flex flex-col font-semibold">
+                <a href="#le-club" class="block px-3 py-4 text-white hover:text-optic-yellow border-b border-white/5">Le Club</a>
+                <a href="#equipe" class="block px-3 py-4 text-white hover:text-optic-yellow border-b border-white/5">L'Équipe</a>
+                <a href="#services" class="block px-3 py-4 text-white hover:text-optic-yellow border-b border-white/5">Services</a>
+                <a href="#tarifs" class="block px-3 py-4 text-white hover:text-optic-yellow border-b border-white/5">Formules & Tarifs</a>
+                <a href="#live-courts" class="block px-3 py-4 text-clay-red flex justify-center items-center gap-2"><span class="w-2 h-2 rounded-full bg-clay-red animate-pulse-fast"></span> Live Courts</a>
+            </div>
+        </div>
+    </nav>
     <section class="relative pt-32 pb-32 lg:pt-48 lg:pb-40 hero-pattern overflow-hidden text-white">
         <div class="absolute -right-20 -top-20 w-[600px] h-[600px] bg-optic-yellow rounded-full opacity-10 blur-3xl"></div>
         <div class="absolute -left-20 -bottom-20 w-[500px] h-[500px] bg-lake-blue rounded-full opacity-20 blur-3xl"></div>
@@ -538,8 +558,8 @@
                 </div>
                 <div class="mt-6 md:mt-0 bg-clay-red px-6 py-4 rounded-2xl shadow-lg shadow-clay-red/20 custom-hover cursor-pointer hover:scale-105 transition-transform">
                     <div class="text-sm font-bold text-white/80 mb-1">PROCHAIN ÉVÉNEMENT</div>
-                    <div class="text-xl font-display text-white">🏆 Tournoi Open de Printemps</div>
-                    <div class="text-optic-yellow text-sm mt-1 font-bold"><i class="fa-regular fa-calendar mr-2"></i> Mai 2026</div>
+                    <div class="text-xl font-display text-white">🏆 Tournoi Open d'Évian</div>
+                    <div class="text-optic-yellow text-sm mt-1 font-bold"><i class="fa-regular fa-calendar mr-2"></i> Juillet 2026</div>
                 </div>
             </div>
 
@@ -547,7 +567,7 @@
                 <div class="col-span-2 row-span-2 relative group rounded-2xl overflow-hidden aspect-square custom-hover">
                     <img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tennis Match" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-tennis-green-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
-                        <span class="text-xl font-bold font-display">Finale Tournoi Interne</span>
+                        <span class="text-xl font-bold font-display">Affiche tournoi interne</span>
                     </div>
                 </div>
                 <div class="relative group rounded-2xl overflow-hidden aspect-square custom-hover">
@@ -565,6 +585,32 @@
             </div>
         </div>
     </section>
+
+	<section id="vie-au-club" class="py-24 bg-white border-t border-gray-100 relative">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="text-center mb-16 reveal">
+				<span class="text-clay-red font-bold tracking-wider uppercase text-sm">Sur les courts et en dehors</span>
+				<h2 class="text-4xl font-display font-bold text-tennis-green-dark mt-2">La Vie au Club</h2>
+				<p class="text-gray-500 mt-2">Revivez les meilleurs moments de la saison.</p>
+			</div>
+			
+            <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 reveal gallery-collapsed">
+			</div>
+
+            <div id="load-more-container" class="text-center mt-12 hidden reveal">
+                <button id="load-more-btn" class="custom-hover bg-tennis-green-dark text-white px-8 py-3 rounded-full font-bold hover:bg-clay-red transition shadow-lg flex items-center gap-2 mx-auto">
+                    Voir plus de photos <i class="fa-solid fa-images"></i>
+                </button>
+            </div>
+		</div>
+	</section>
+
+    <div id="lightbox" class="fixed inset-0 z-[110] bg-black/95 hidden flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 backdrop-blur-sm">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/50 text-4xl custom-hover hover:text-optic-yellow transition w-12 h-12 flex items-center justify-center rounded-full hover:bg-white/10 z-50">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Zoom" class="max-h-[85vh] max-w-[90vw] object-contain rounded-xl shadow-2xl scale-95 transition-transform duration-300">
+    </div>
 
     <section id="avis" class="py-24 bg-pattern-balls overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1100,6 +1146,127 @@
             if(Math.random() > 0.5) match1.winPoint(Math.random() > 0.5 ? 1 : 2);
             if(Math.random() > 0.5) match2.winPoint(Math.random() > 0.5 ? 1 : 2);
         }, 5000);
+
+		// --- MENU MOBILE ---
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileBtn.querySelector('i');
+            if(mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+
+        // Ferme le menu quand on clique sur un lien (sur mobile)
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileBtn.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
+            });
+        });
+
+        // --- GALERIE PHOTO DYNAMIQUE & LIGHTBOX (Méthode sans serveur avec limite) ---
+        
+        const galleryGrid = document.getElementById('gallery-grid');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const loadMoreContainer = document.getElementById('load-more-container');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+
+        // 1. Configuration de la recherche automatique
+        const maxImagesToTest = 50; 
+        const formatsToTest = ['jpg', 'png', 'jpeg']; 
+        let loadedImagesCount = 0; // On va compter combien d'images existent vraiment
+
+        // 2. Générer la grille
+        if (galleryGrid) {
+            for (let i = 1; i <= maxImagesToTest; i++) {
+                formatsToTest.forEach(format => {
+                    const imgPath = `images/vieclub/${i}.${format}`;
+                    
+                    const imgTest = new Image();
+                    
+                    imgTest.onload = function() {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.className = "relative aspect-square overflow-hidden rounded-xl custom-hover group cursor-pointer shadow-sm bg-gray-100 reveal active";
+                        
+                        imgContainer.innerHTML = `
+                            <img src="${imgPath}" alt="Vie du club" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-tennis-green-dark/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                                <i class="fa-solid fa-expand text-optic-yellow text-4xl drop-shadow-lg transform scale-50 group-hover:scale-100 transition duration-300"></i>
+                            </div>
+                        `;
+                        
+                        imgContainer.onclick = () => openLightbox(imgPath);
+                        galleryGrid.appendChild(imgContainer);
+
+                        // On incrémente notre compteur
+                        loadedImagesCount++;
+                        
+                        // Si on dépasse 8 images, on affiche le bouton "Voir plus"
+                        if (loadedImagesCount > 8 && loadMoreContainer) {
+                            loadMoreContainer.classList.remove('hidden');
+                        }
+                    };
+                    
+                    imgTest.src = imgPath;
+                });
+            }
+        }
+
+        // Action du bouton "Voir plus"
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                // On active ou désactive la limite
+                galleryGrid.classList.toggle('gallery-collapsed');
+                
+                // On change le texte du bouton en fonction de l'état
+                if (galleryGrid.classList.contains('gallery-collapsed')) {
+                    loadMoreBtn.innerHTML = 'Voir plus de photos <i class="fa-solid fa-images"></i>';
+                    // Optionnel : on remonte un peu la page au niveau de la galerie quand on réduit
+                    document.getElementById('vie-au-club').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    loadMoreBtn.innerHTML = 'Voir moins <i class="fa-solid fa-angle-up"></i>';
+                }
+            });
+        }
+
+        // 3. Fonctions de la Lightbox
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+                lightboxImg.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            lightboxImg.classList.add('scale-95');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightboxImg.src = '';
+            }, 300); 
+        }
+        
+        lightbox.addEventListener('click', (e) => {
+            if(e.target === lightbox) closeLightbox();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && !lightbox.classList.contains('hidden')) {
+                closeLightbox();
+            }
+        });
 
     </script>
 </body>
