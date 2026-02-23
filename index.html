@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis Club Évian-les-Bains | TC Évian 74</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tennis-green': '#0A5C36',
+                        'tennis-green-dark': '#042f1a',
+                        'optic-yellow': '#DFFF00',
+                        'optic-yellow-hover': '#b5cc00',
+                        'clay-red': '#E04F36',
+                        'lake-blue': '#0077b6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Personnalisé & Animations 2026 */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+            cursor: none; 
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Curseur personnalisé */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background-color: #DFFF00;
+            border: 2px solid #042f1a;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+            box-shadow: 0 0 10px rgba(223, 255, 0, 0.8);
+        }
+        #custom-cursor::before, #custom-cursor::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid inherit;
+            border-radius: 50%;
+        }
+        #custom-cursor::before { left: -60%; }
+        #custom-cursor::after { right: -60%; }
+
+        /* Animations d'apparition (Scroll) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Background Pattern + Dégradé Lac/Montagne */
+        .hero-pattern {
+            background: linear-gradient(135deg, #0A5C36 0%, #042f1a 100%);
+            background-image: radial-gradient(rgba(223, 255, 0, 0.15) 1px, transparent 1px), linear-gradient(135deg, #0A5C36 0%, #005f73 100%);
+            background-size: 50px 50px, 100% 100%;
+        }
+
+        /* Patterns SVG discrets pour les sections (Balles et Raquettes) */
+        .bg-pattern-balls {
+            background-color: #f8fafc;
+            background-image: url('data:image/svg+xml;utf8,<svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" stroke="%23042f1a" stroke-width="4" fill="none" opacity="0.03"/><path d="M28,50 A22,22 0 0,0 50,28 M72,50 A22,22 0 0,1 50,72" stroke="%23042f1a" stroke-width="4" fill="none" opacity="0.03"/></svg>');
+        }
+        
+        .bg-pattern-rackets {
+            background-color: #f8fafc;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="35" rx="15" ry="22" stroke="%23042f1a" stroke-width="3" fill="none" opacity="0.03"/><line x1="50" y1="57" x2="50" y2="85" stroke="%23042f1a" stroke-width="5" opacity="0.03"/><line x1="46" y1="85" x2="54" y2="85" stroke="%23042f1a" stroke-width="5" opacity="0.03"/></svg>');
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hover-glow:hover {
+            box-shadow: 0 0 25px rgba(223, 255, 0, 0.4);
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+
+        .animate-pulse-fast {
+            animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Formes pour la séparation Lac/Montagne */
+        .custom-shape-divider-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .custom-shape-divider-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        .custom-shape-divider-bottom .shape-fill {
+            fill: #042f1a;
+        }
+        
+        /* Modale Glassmorphism */
+        .modal-glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased selection:bg-optic-yellow selection:text-tennis-green-dark">
+
+    <div id="custom-cursor" class="hidden md:block"></div>
+
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-card bg-tennis-green-dark/90 text-white" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-optic-yellow rounded-full flex items-center justify-center text-tennis-green-dark text-xl custom-hover">
+                        <i class="fa-solid fa-baseball"></i>
+                    </div>
+                    <span class="font-display font-bold text-2xl tracking-tight">TC <span class="text-optic-yellow">ÉVIAN</span></span>
+                </div>
+                <div class="hidden lg:flex space-x-6 font-semibold text-sm">
+                    <a href="#le-club" class="hover:text-optic-yellow transition">Le Club</a>
+                    <a href="#equipe" class="hover:text-optic-yellow transition">L'Équipe</a>
+                    <a href="#services" class="hover:text-optic-yellow transition">Services</a>
+                    <a href="#tarifs" class="hover:text-optic-yellow transition">Formules & Tarifs</a>
+                    <a href="#live-courts" class="hover:text-clay-red transition flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-clay-red animate-pulse-fast"></span> Live</a>
+                </div>
+                <div class="hidden md:flex">
+                    <a href="https://tenup.fft.fr/club/50740059" target="_blank" class="custom-hover bg-optic-yellow text-tennis-green-dark px-6 py-2 rounded-full font-bold hover:bg-optic-yellow-hover hover:scale-105 transition shadow-[0_0_15px_rgba(223,255,0,0.3)]">
+                        Adhérer au club
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pt-32 pb-32 lg:pt-48 lg:pb-40 hero-pattern overflow-hidden text-white">
+        <div class="absolute -right-20 -top-20 w-[600px] h-[600px] bg-optic-yellow rounded-full opacity-10 blur-3xl"></div>
+        <div class="absolute -left-20 -bottom-20 w-[500px] h-[500px] bg-lake-blue rounded-full opacity-20 blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto reveal">
+                <div class="inline-block bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-clay-red/50 text-optic-yellow font-semibold text-sm mb-6 uppercase tracking-wider shadow-[0_0_15px_rgba(224,79,54,0.3)]">
+                    Un cadre exceptionnel entre lac et montagnes
+                </div>
+                <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight">
+                    Vibrez au rythme du <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-optic-yellow to-yellow-200">Tennis sur le Léman</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+                    Rejoignez le TC Évian. De l'école de tennis à la compétition, en passant par le pickleball : 10 terrains de jeu, une bulle l'hiver et un panorama unique au monde.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#tarifs" class="custom-hover bg-optic-yellow text-tennis-green-dark px-8 py-4 rounded-full font-bold text-lg hover-glow text-center">
+                        Découvrir nos offres
+                    </a>
+                    <a href="#services" class="custom-hover bg-white/10 border border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-clay-red hover:border-clay-red transition text-center backdrop-blur-sm">
+                        Voir les services
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="custom-shape-divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section id="live-courts" class="py-12 bg-tennis-green-dark text-white relative">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center gap-3 mb-8 reveal">
+                <div class="w-3 h-3 bg-clay-red rounded-full animate-pulse-fast shadow-[0_0_10px_rgba(224,79,54,0.8)]"></div>
+                <h2 class="text-2xl font-display font-bold">Terrains en Direct (Simulation)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-optic-yellow flex justify-between items-center transition-colors">
+                    <div class="w-full">
+                        <div class="text-gray-400 text-sm mb-2 font-bold tracking-widest uppercase">COURT 1 - Synthétique Sable</div>
+                        <div class="flex justify-between items-center gap-4">
+                            <div class="font-display text-xl flex-grow">P. Dupont</div>
+                            <div id="c1-p1-scores" class="flex gap-3 font-mono text-2xl font-bold text-gray-300"></div>
+                            <div class="font-mono text-2xl font-bold text-optic-yellow w-12 text-right" id="c1-p1-points">0</div>
+                        </div>
+                        <div class="w-full h-px bg-white/20 my-3"></div>
+                        <div class="flex justify-between items-center gap-4">
+                            <div class="font-display text-xl text-gray-400 flex-grow">J. Martin</div>
+                            <div id="c1-p2-scores" class="flex gap-3 font-mono text-2xl font-bold text-gray-500"></div>
+                            <div class="font-mono text-2xl font-bold text-gray-400 w-12 text-right" id="c1-p2-points">0</div>
+                        </div>
+                        <div id="c1-status" class="text-xs text-clay-red font-bold mt-2 uppercase tracking-wide h-4"></div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-lake-blue flex justify-between items-center transition-colors">
+                    <div class="w-full">
+                        <div class="text-gray-400 text-sm mb-2 font-bold tracking-widest uppercase">COURT 2 - Greenset (Bulle)</div>
+                        <div class="flex justify-between items-center gap-4">
+                            <div class="font-display text-xl flex-grow">Équipe 1 (Dames)</div>
+                            <div id="c2-p1-scores" class="flex gap-3 font-mono text-2xl font-bold text-gray-300"></div>
+                            <div class="font-mono text-2xl font-bold text-optic-yellow w-12 text-right" id="c2-p1-points">0</div>
+                        </div>
+                        <div class="w-full h-px bg-white/20 my-3"></div>
+                        <div class="flex justify-between items-center gap-4">
+                            <div class="font-display text-xl text-gray-400 flex-grow">TC Thonon</div>
+                            <div id="c2-p2-scores" class="flex gap-3 font-mono text-2xl font-bold text-gray-500"></div>
+                            <div class="font-mono text-2xl font-bold text-gray-400 w-12 text-right" id="c2-p2-points">0</div>
+                        </div>
+                        <div id="c2-status" class="text-xs text-clay-red font-bold mt-2 uppercase tracking-wide h-4"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="le-club" class="py-24 bg-pattern-rackets relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-display font-bold text-tennis-green-dark mb-4 border-b-4 border-clay-red inline-block pb-2">Bien plus qu'un club</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-6 bg-white/80 p-4 rounded-xl backdrop-blur-sm">Niché sur les hauteurs (Les Mateirons), le TC Évian offre un cadre de jeu incroyable avec vue sur le lac. Que vous soyez adepte du dur ou curieux des nouvelles pratiques, nous avons ce qu'il vous faut.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 reveal">
+                <div class="md:col-span-2 md:row-span-2 bg-white rounded-3xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-tennis-green-dark translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-0"></div>
+                    <div class="relative z-10 group-hover:text-white transition-colors duration-500">
+                        <div class="w-14 h-14 bg-optic-yellow text-tennis-green-dark rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-3xl font-display font-bold mb-4">La progression avant tout</h3>
+                        <p class="text-lg leading-relaxed mb-6 opacity-90">De notre école "Galaxie Tennis" aux cours collectifs adultes en passant par la compétition, notre équipe pédagogique est dédiée à votre évolution sur le court.</p>
+                        <ul class="space-y-3 font-semibold">
+                            <li><i class="fa-solid fa-check text-optic-yellow mr-2"></i> Mini Tennis dès 3 ans</li>
+                            <li><i class="fa-solid fa-check text-clay-red mr-2"></i> +1860 créneaux disponibles à la réservation</li>
+                            <li><i class="fa-solid fa-check text-optic-yellow mr-2"></i> 2 terrains sous une bulle l'hiver</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-tennis-green text-white rounded-3xl p-8 shadow-sm relative overflow-hidden hover-glow">
+                    <div class="absolute -right-6 -top-6 text-9xl text-white/10"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3 class="text-4xl font-display font-bold text-optic-yellow mb-2">10</h3>
+                    <p class="text-xl font-bold mb-2">Terrains de Tennis</p>
+                    <p class="text-sm opacity-90 leading-relaxed">
+                        • 9 terrains en Greenset classique<br>
+                        • 1 terrain Synthétique / Sable<br>
+                        <span class="text-optic-yellow font-semibold">+ 2 terrains de Pickleball</span><br>
+                        <span class="text-clay-red font-bold">Projet à venir : 2 à 3 pistes de Padel</span>
+                    </p>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:border-clay-red transition-colors duration-300">
+                    <div class="w-12 h-12 bg-gray-100 text-clay-red rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-tennis-green-dark mb-2">L'Esprit Club</h3>
+                    <p class="text-gray-600 text-sm">Tournois, stages, recherche de partenaires et cadre idyllique. Le sport rencontre la convivialité.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-16 bg-white overflow-hidden border-t-4 border-clay-red">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-display font-bold text-tennis-green-dark mb-10 text-center reveal">Découvrez nos services</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 reveal">
+                
+                <div onclick="openServiceModal('reservations')" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group">
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3"><i class="fa-solid fa-calendar-check"></i></div>
+                    <span class="font-bold text-sm text-gray-700">Réservation</span>
+                </div>
+                
+                <div onclick="openServiceModal('location')" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group">
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3"><i class="fa-solid fa-ticket"></i></div>
+                    <span class="font-bold text-sm text-gray-700">Location</span>
+                </div>
+                
+                <div onclick="document.getElementById('tarifs').scrollIntoView({behavior: 'smooth'})" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group">
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <span class="font-bold text-sm text-gray-700">Cours</span>
+                </div>
+                
+                <div onclick="openServiceModal('stages')" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group">
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3"><i class="fa-solid fa-campground"></i></div>
+                    <span class="font-bold text-sm text-gray-700">Stages</span>
+                </div>
+                
+                <div onclick="openServiceModal('competitions')" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group">
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3"><i class="fa-solid fa-trophy"></i></div>
+                    <span class="font-bold text-sm text-gray-700">Compétitions</span>
+                </div>
+                
+                <div onclick="openServiceModal('partenaires')" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group">
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3"><i class="fa-solid fa-handshake"></i></div>
+                    <span class="font-bold text-sm text-gray-700">Partenaires</span>
+                </div>
+                
+                <div onclick="openServiceModal('cordage')" class="custom-hover flex flex-col items-center p-4 rounded-xl bg-gray-50 hover:bg-clay-red/10 border border-transparent hover:border-clay-red transition cursor-pointer text-center group relative overflow-hidden">
+                    <div class="absolute -right-2 -top-2 w-10 h-10 bg-optic-yellow rounded-full -z-10 group-hover:scale-150 transition-transform duration-500"></div>
+                    <div class="w-16 h-16 bg-white group-hover:bg-clay-red rounded-full flex items-center justify-center text-2xl text-tennis-green group-hover:text-white shadow-sm transition-colors mb-3 relative z-10"><i class="fa-solid fa-ring"></i></div>
+                    <span class="font-bold text-sm text-gray-700 relative z-10">Cordage</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="equipe" class="py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-clay-red font-bold tracking-wider uppercase text-sm">Le moteur du club</span>
+                <h2 class="text-4xl font-display font-bold text-tennis-green-dark mt-2">Notre Équipe</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 reveal">
+                <div>
+                    <h3 class="text-xl font-display font-bold text-tennis-green mb-6 border-b-2 border-optic-yellow pb-2 inline-block">Équipe Pédagogique</h3>
+                    <ul class="space-y-4">
+                        <li class="custom-hover hover:border-clay-red transition bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-tennis-green"><i class="fa-solid fa-user-tie"></i></div>
+                            <div><div class="font-bold">Boris CROISAT</div><div class="text-xs text-gray-500">Enseignant tous publics</div></div>
+                        </li>
+                        <li class="custom-hover hover:border-clay-red transition bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-tennis-green"><i class="fa-solid fa-user-tie"></i></div>
+                            <div><div class="font-bold">Benjamin BORDET</div><div class="text-xs text-gray-500">Enseignant tous publics</div></div>
+                        </li>
+                        <li class="custom-hover hover:border-clay-red transition bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-tennis-green"><i class="fa-solid fa-user"></i></div>
+                            <div><div class="font-bold">Nathan METZ</div><div class="text-xs text-gray-500">CQP Stagiaire</div></div>
+                        </li>
+                        <li class="custom-hover hover:border-clay-red transition bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-tennis-green"><i class="fa-solid fa-user"></i></div>
+                            <div><div class="font-bold">Elodie DUSSERT</div><div class="text-xs text-gray-500">CQP Stagiaire</div></div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-display font-bold text-tennis-green mb-6 border-b-2 border-optic-yellow pb-2 inline-block">Le Comité</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="custom-hover hover:border-clay-red transition flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100"><span class="font-bold">Stéphane MATHIEU</span><span class="text-optic-yellow bg-tennis-green-dark px-2 py-1 rounded text-xs">Président</span></li>
+                        <li class="custom-hover hover:border-clay-red transition flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100"><span class="font-bold">Anthony DE COZAR</span><span class="text-gray-500">Vice-Président</span></li>
+                        <li class="custom-hover hover:border-clay-red transition flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100"><span class="font-bold">Bruno MARTIN</span><span class="text-gray-500">Trésorier Général</span></li>
+                        <li class="custom-hover hover:border-clay-red transition flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100"><span class="font-bold">Caroline LAMBOTTE</span><span class="text-gray-500">Secrétaire Général</span></li>
+                        <li class="custom-hover hover:border-clay-red transition flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100"><span class="font-bold">François FAVRE</span><span class="text-gray-500">Membre</span></li>
+                        <li class="custom-hover hover:border-clay-red transition flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100"><span class="font-bold">Philippe VARICHON</span><span class="text-gray-500">Membre</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-display font-bold text-tennis-green mb-6 border-b-2 border-optic-yellow pb-2 inline-block">Administration</h3>
+                    <ul class="space-y-4">
+                        <li class="custom-hover hover:border-clay-red transition bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-tennis-green"><i class="fa-solid fa-headset"></i></div>
+                            <div><div class="font-bold">Charles LEHMANN</div><div class="text-xs text-gray-500">Employé Administratif</div></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tarifs" class="py-24 bg-gray-50 relative">
+        <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-optic-yellow to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-tennis-green font-bold tracking-wider uppercase text-sm">Saison 2025/2026</span>
+                <h2 class="text-4xl font-display font-bold text-tennis-green-dark mt-2">Offres et Tarifs</h2>
+                <p class="text-gray-500 mt-2">Rejoignez-nous pour profiter de nos installations.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 reveal">
+                
+                <div class="bg-white rounded-3xl p-8 border border-gray-100 h-full flex flex-col hover:border-optic-yellow transition-colors">
+                    <h3 class="text-2xl font-display font-bold text-tennis-green-dark mb-6 flex items-center gap-3"><i class="fa-solid fa-id-card text-optic-yellow drop-shadow-sm"></i> Adhésions (Jeu libre)</h3>
+                    <p class="text-sm text-gray-500 mb-6">Réservation de tous les courts (1er sept. au 31 août). Tennis & Pickleball. 3 invitations offertes (sauf Junior).</p>
+                    
+                    <div class="space-y-4 flex-grow">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">Adulte</div><div class="text-xs text-gray-500">+18 ans</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">139 €</div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">Couple</div><div class="text-xs text-gray-500">Pour les conjoints</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">115 €</div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">Étudiant</div><div class="text-xs text-gray-500">18 - 30 ans</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">75 €</div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">Junior</div><div class="text-xs text-gray-500">7 - 18 ans</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">95 €</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-tennis-green-dark text-white rounded-3xl p-8 shadow-2xl relative transform lg:scale-105 z-10 border border-optic-yellow/30 h-full flex flex-col">
+                    <div class="absolute top-0 right-0 bg-clay-red text-white text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-3xl uppercase tracking-wider">Formation</div>
+                    <h3 class="text-2xl font-display font-bold text-optic-yellow mb-6 flex items-center gap-3"><i class="fa-solid fa-graduation-cap"></i> Enseignement</h3>
+                    <p class="text-sm text-gray-300 mb-6">De l'initiation à la compétition. Tarifs pour la saison complète (septembre à juin).</p>
+                    
+                    <div class="space-y-4 flex-grow overflow-y-auto pr-2">
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/20 hover:border-clay-red transition">
+                            <div class="flex justify-between items-start mb-1">
+                                <div class="font-bold text-optic-yellow">Mini Tennis (3-6 ans)</div>
+                                <div class="font-display font-bold">167 €</div>
+                            </div>
+                            <div class="text-xs text-gray-300 mb-2">Ou 137€ hors trêve hivernale (janv/fév).</div>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/20 hover:border-clay-red transition">
+                            <div class="flex justify-between items-start mb-1">
+                                <div class="font-bold text-optic-yellow">Galaxie 1h (7-17 ans)</div>
+                                <div class="font-display font-bold">257 €</div>
+                            </div>
+                            <div class="text-xs text-gray-300">Ou 227€ hors trêve hivernale.</div>
+                        </div>
+                        <div class="flex justify-between items-center bg-white/10 p-4 rounded-xl border border-white/20 hover:border-clay-red transition">
+                            <div><div class="font-bold text-white">Galaxie 2x1h</div><div class="text-xs text-gray-300">Dès 7 ans</div></div>
+                            <div class="font-display font-bold">427 €</div>
+                        </div>
+                        <div class="flex justify-between items-center bg-white/10 p-4 rounded-xl border border-white/20 hover:border-clay-red transition">
+                            <div><div class="font-bold text-white">Compétition 2x1h30</div><div class="text-xs text-gray-300">Dès 11 ans</div></div>
+                            <div class="font-display font-bold">457 €</div>
+                        </div>
+                        <div class="flex justify-between items-center bg-white/10 p-4 rounded-xl border border-white/20 hover:border-clay-red transition">
+                            <div><div class="font-bold text-white">Cours Adultes (1h30)</div><div class="text-xs text-gray-300">1x par semaine (25 séances)</div></div>
+                            <div class="font-display font-bold">435 €</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border border-gray-100 h-full flex flex-col hover:border-optic-yellow transition-colors">
+                    <h3 class="text-2xl font-display font-bold text-tennis-green-dark mb-6 flex items-center gap-3"><i class="fa-solid fa-ticket text-optic-yellow drop-shadow-sm"></i> Carnets & Loc.</h3>
+                    <p class="text-sm text-gray-500 mb-6">Pour les joueurs occasionnels et les invités. Réservation à l'heure.</p>
+                    
+                    <div class="space-y-4 flex-grow">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">10 Loc. Extérieurs</div><div class="text-xs text-gray-500">Non-adhérents</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">135 €</div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">10 Loc. Couverts</div><div class="text-xs text-gray-500">Valable aussi en ext.</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">170 €</div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-transparent hover:border-clay-red transition">
+                            <div class="flex justify-between items-center">
+                                <div><div class="font-bold text-tennis-green-dark">Carnet 5 Invitations</div><div class="text-xs text-gray-500">Pour jouer avec un non-membre</div></div>
+                                <div class="font-display font-bold text-lg text-tennis-green">25 €</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://tenup.fft.fr" target="_blank" class="custom-hover mt-8 block w-full text-center py-3 rounded-xl bg-clay-red text-white font-bold hover:bg-orange-600 transition shadow-lg shadow-clay-red/30">Réserver sur Ten'Up</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="galerie" class="py-24 bg-tennis-green-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="text-4xl font-display font-bold text-optic-yellow mb-2">Vie du Club & Événements</h2>
+                    <p class="text-gray-300">Des moments de partage inoubliables sur nos courts et au club house.</p>
+                </div>
+                <div class="mt-6 md:mt-0 bg-clay-red px-6 py-4 rounded-2xl shadow-lg shadow-clay-red/20 custom-hover cursor-pointer hover:scale-105 transition-transform">
+                    <div class="text-sm font-bold text-white/80 mb-1">PROCHAIN ÉVÉNEMENT</div>
+                    <div class="text-xl font-display text-white">🏆 Tournoi Open de Printemps</div>
+                    <div class="text-optic-yellow text-sm mt-1 font-bold"><i class="fa-regular fa-calendar mr-2"></i> Mai 2026</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+                <div class="col-span-2 row-span-2 relative group rounded-2xl overflow-hidden aspect-square custom-hover">
+                    <img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tennis Match" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tennis-green-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                        <span class="text-xl font-bold font-display">Finale Tournoi Interne</span>
+                    </div>
+                </div>
+                <div class="relative group rounded-2xl overflow-hidden aspect-square custom-hover">
+                    <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Greenset" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="relative group rounded-2xl overflow-hidden aspect-square custom-hover">
+                    <img src="https://scontent-mrs2-3.xx.fbcdn.net/v/t39.30808-6/474985951_1228106942135949_2967320381278710875_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=2a1932&_nc_ohc=I-o2ep4q4MoQ7kNvwHHZ1e7&_nc_oc=Adn7THIRdC4QE0jw7NdnHOwr4T9mRlSujnuItsyajZ5edm9V8KEYOp7_P3YeG0LaZJ0&_nc_zt=23&_nc_ht=scontent-mrs2-3.xx&_nc_gid=pZmxmscekdhIBp4NvdE1YA&oh=00_AfsgIIG0Q1T0pvVmT17L7njnlpaX1qZzuB5lUp_BDE0QUw&oe=699C3108" alt="École de tennis" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="col-span-2 relative group rounded-2xl overflow-hidden aspect-[2/1] custom-hover">
+                    <img src="https://images.unsplash.com/photo-1560012057-4372e14c5085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Club House" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tennis-green-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                        <span class="text-xl font-bold font-display">Convivialité</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="avis" class="py-24 bg-pattern-balls overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="flex justify-center items-center gap-2 mb-4 text-3xl">
+                    <i class="fa-brands fa-google text-blue-500"></i>
+                </div>
+                <h2 class="text-4xl font-display font-bold text-tennis-green-dark">Ce que disent nos membres</h2>
+                <p class="text-gray-500 mt-2">La satisfaction de nos joueurs est notre plus belle victoire.</p>
+            </div>
+            
+            <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+                </div>
+            
+            <div class="text-center mt-10">
+                <button onclick="displayRandomReviews()" class="custom-hover text-sm font-bold text-tennis-green hover:text-clay-red transition uppercase tracking-wider flex items-center justify-center mx-auto gap-2 px-4 py-2 rounded-full hover:bg-white shadow-sm">
+                    <i class="fa-solid fa-rotate"></i> D'autres avis
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 bg-white border-t-8 border-optic-yellow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-tennis-green-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row reveal">
+                
+                <div class="lg:w-2/5 p-12 bg-tennis-green text-white relative overflow-hidden">
+                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-white opacity-5 rounded-full blur-2xl"></div>
+                    <h3 class="text-3xl font-display font-bold mb-6 text-optic-yellow">Rencontrons-nous</h3>
+                    <p class="text-gray-200 mb-10 text-sm leading-relaxed">Envie de réserver, de prendre des cours ou de visiter nos installations ? L'équipe du TC Évian est à votre écoute.</p>
+                    
+                    <div class="space-y-6 text-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-clay-red flex items-center justify-center shrink-0"><i class="fa-solid fa-location-dot text-white"></i></div>
+                            <div><div class="font-bold text-white">Adresse</div><div class="text-gray-300">Les Mateirons<br>Avenue de la Verniaz<br>74500 ÉVIAN-LES-BAINS</div></div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-clay-red flex items-center justify-center shrink-0"><i class="fa-solid fa-phone text-white"></i></div>
+                            <div><div class="font-bold text-white">Téléphone</div><div class="text-gray-300">04 50 75 30 02</div></div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-clay-red flex items-center justify-center shrink-0"><i class="fa-solid fa-envelope text-white"></i></div>
+                            <div><div class="font-bold text-white">Email</div><div class="text-gray-300">tennisclub.evian@gmail.com</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-3/5 p-12 bg-white">
+                    <form onsubmit="event.preventDefault(); alert('Message envoyé avec succès !');" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Prénom</label>
+                                <input type="text" class="custom-hover w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-clay-red focus:border-transparent transition" placeholder="Roger" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Nom</label>
+                                <input type="text" class="custom-hover w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-clay-red focus:border-transparent transition" placeholder="Federer" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Email</label>
+                            <input type="email" class="custom-hover w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-clay-red focus:border-transparent transition" placeholder="roger@example.com" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Sujet</label>
+                            <select class="custom-hover w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-clay-red focus:border-transparent transition">
+                                <option>Demande d'informations</option>
+                                <option>Location & Créneaux</option>
+                                <option>Inscription aux cours</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Message</label>
+                            <textarea rows="4" class="custom-hover w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-clay-red focus:border-transparent transition" placeholder="Votre message..." required></textarea>
+                        </div>
+                        <button type="submit" class="custom-hover w-full bg-tennis-green-dark text-white font-bold text-lg py-4 rounded-xl hover:bg-clay-red transition flex justify-center items-center gap-2">
+                            Envoyer le message <i class="fa-solid fa-paper-plane text-optic-yellow"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-tennis-green-dark text-white pt-16 pb-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-optic-yellow rounded-full flex items-center justify-center text-tennis-green-dark text-sm">
+                            <i class="fa-solid fa-baseball"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl tracking-tight">TC <span class="text-optic-yellow">ÉVIAN</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm">
+                        Situé aux Mateirons avec une vue imprenable sur le lac Léman. De la formation des plus jeunes à la compétition adulte, partageons notre passion du tennis.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold mb-4 text-optic-yellow">Liens Rapides</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#le-club" class="hover:text-clay-red transition">Le Club & Infrastructures</a></li>
+                        <li><a href="#equipe" class="hover:text-clay-red transition">L'Équipe</a></li>
+                        <li><a href="#tarifs" class="hover:text-clay-red transition">Nos Formules</a></li>
+                        <li><a href="https://tenup.fft.fr/club/50740059" target="_blank" class="hover:text-clay-red transition">Réservation Ten'Up</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold mb-4 text-optic-yellow">Suivez-nous</h4>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/tennis.evian/" target="_blank" class="custom-hover w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-clay-red hover:text-white transition">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="custom-hover w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-clay-red hover:text-white transition">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <div>&copy; 2026 Tennis Club Évian-les-Bains. Tous droits réservés.</div>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-gray-300">Mentions Légales</a>
+                    <a href="#" class="hover:text-gray-300">Politique de Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="service-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 bg-black/50 p-4">
+        <div class="modal-glass w-full max-w-2xl rounded-3xl p-8 md:p-12 relative transform scale-95 transition-transform duration-300 shadow-2xl">
+            <button onclick="closeServiceModal()" class="absolute top-6 right-6 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-clay-red hover:text-white transition custom-hover">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 id="sm-title" class="text-3xl font-display font-bold text-tennis-green-dark mb-6 border-b-4 border-clay-red inline-block pb-2">Titre du service</h3>
+            <div id="sm-desc" class="text-gray-600 leading-relaxed mb-10 text-lg">
+                Description détaillée du service...
+            </div>
+            <div class="text-center">
+                <a id="sm-btn" href="#" class="custom-hover inline-block bg-tennis-green text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-clay-red transition shadow-lg shadow-tennis-green/20">
+                    Action
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CURSEUR BALLE DE TENNIS ---
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        const hoverElements = document.querySelectorAll('a, button, input, select, textarea, .custom-hover');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.backgroundColor = 'transparent';
+                cursor.style.borderColor = '#E04F36'; // Devient terre battue au survol
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = '#DFFF00';
+                cursor.style.borderColor = '#042f1a';
+            });
+        });
+
+        // --- NAVBAR SCROLL ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-tennis-green-dark/95');
+                nav.classList.remove('bg-tennis-green-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-tennis-green-dark/95');
+                nav.classList.add('bg-tennis-green-dark/90');
+            }
+        });
+
+        // --- SCROLL REVEAL ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // --- MODALE DES SERVICES ---
+        const serviceData = {
+            reservations: { 
+                title: "Réservation de courts", 
+                desc: `<div class='flex flex-col gap-4'>
+                    <p class='text-lg'>Réservez votre terrain en quelques clics et profitez de nos installations premium tout au long de l'année.</p>
+                    <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2'>
+                        <div class='bg-gray-50 p-4 rounded-xl border border-gray-100 flex items-start gap-3 hover:border-clay-red transition-colors'>
+                            <div class='text-tennis-green text-2xl mt-1'><i class='fa-solid fa-clock'></i></div>
+                            <div><div class='font-bold text-tennis-green-dark'>+10 Créneaux</div><div class='text-sm text-gray-500'>Disponibles à la réservation</div></div>
+                        </div>
+                        <div class='bg-gray-50 p-4 rounded-xl border border-gray-100 flex items-start gap-3 hover:border-clay-red transition-colors'>
+                            <div class='text-clay-red text-2xl mt-1'><i class='fa-solid fa-layer-group'></i></div>
+                            <div><div class='font-bold text-tennis-green-dark'>Surfaces variées</div><div class='text-sm text-gray-500'>Greenset, Synthétique, Bulle & Pickleball</div></div>
+                        </div>
+                        <div class='bg-tennis-green-dark p-4 rounded-xl border border-gray-100 flex items-start gap-3 sm:col-span-2 shadow-lg'>
+                            <div class='text-optic-yellow text-3xl mt-1'><i class='fa-solid fa-mobile-screen-button'></i></div>
+                            <div><div class='font-bold text-white'>Application Ten'Up</div><div class='text-sm text-gray-300'>Gérez vos réservations, vos partenaires et votre profil directement depuis votre smartphone 24h/24 et 7j/7.</div></div>
+                        </div>
+                    </div>
+                </div>`, 
+                link: "https://tenup.fft.fr/club/50740059/reservations", 
+                btnText: "Réserver sur Ten'Up" 
+            },
+            location: { 
+                title: "Location de courts", 
+                desc: `<div class='flex flex-col gap-4'>
+                    <p class='text-lg'>Envie de taper la balle sans engagement ? Nos terrains sont ouverts à tous, adhérents comme joueurs de passage.</p>
+                    <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2'>
+                        <div class='bg-gray-50 p-5 rounded-xl border-l-4 border-tennis-green flex flex-col hover:shadow-md transition-shadow'>
+                            <span class='text-3xl mb-3 text-tennis-green'><i class='fa-solid fa-sun'></i></span>
+                            <span class='font-bold text-tennis-green-dark text-lg'>Courts Extérieurs</span>
+                            <span class='text-sm text-gray-500 mt-1'>Profitez du grand air avec une vue imprenable sur le lac Léman.</span>
+                        </div>
+                        <div class='bg-gray-50 p-5 rounded-xl border-l-4 border-lake-blue flex flex-col hover:shadow-md transition-shadow'>
+                            <span class='text-3xl mb-3 text-lake-blue'><i class='fa-solid fa-cloud-showers-heavy'></i></span>
+                            <span class='font-bold text-tennis-green-dark text-lg'>Bulle (Couverts)</span>
+                            <span class='text-sm text-gray-500 mt-1'>Jouez au chaud et au sec tout l'hiver, peu importe la météo extérieure.</span>
+                        </div>
+                    </div>
+                    <div class='bg-clay-red/10 text-clay-red p-4 rounded-xl text-sm font-semibold flex items-center gap-3 mt-2 border border-clay-red/20'>
+                        <i class='fa-solid fa-circle-info text-xl'></i> Carnets de 10 tickets disponibles à tarif préférentiel dans la rubrique Offres.
+                    </div>
+                </div>`, 
+                link: "https://tenup.fft.fr/club/50740059/offres", 
+                btnText: "Voir les locations" 
+            },
+            stages: { 
+                title: "Stages de Tennis", 
+                desc: `<div class='flex flex-col gap-4'>
+                    <p class='text-lg'>Accélérez votre progression pendant les vacances scolaires grâce à nos stages intensifs encadrés par notre équipe diplômée (Boris & Benjamin).</p>
+                    <div class='space-y-3 mt-2'>
+                        <div class='flex items-center gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-optic-yellow transition-colors'>
+                            <div class='w-14 h-14 bg-white rounded-full flex items-center justify-center text-optic-yellow-hover shadow-sm text-2xl shrink-0'><i class='fa-solid fa-child-reaching'></i></div>
+                            <div><div class='font-bold text-tennis-green-dark text-lg'>Stages Enfants & Ados</div><div class='text-sm text-gray-500'>De l'initiation au perfectionnement, par groupes de niveaux et d'âges.</div></div>
+                        </div>
+                        <div class='flex items-center gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-clay-red transition-colors'>
+                            <div class='w-14 h-14 bg-white rounded-full flex items-center justify-center text-clay-red shadow-sm text-2xl shrink-0'><i class='fa-solid fa-bolt'></i></div>
+                            <div><div class='font-bold text-tennis-green-dark text-lg'>Stages Adultes (Soirée)</div><div class='text-sm text-gray-500'>Formules intensives après le travail pour booster votre technique ou votre tactique.</div></div>
+                        </div>
+                    </div>
+                </div>`, 
+                link: "https://tenup.fft.fr/club/50740059/offres", 
+                btnText: "S'inscrire à un stage" 
+            },
+            competitions: { 
+                title: "Compétitions & Tournois", 
+                desc: `<div class='flex flex-col gap-4'>
+                    <p class='text-lg'>Rejoignez l'esprit de compétition du TC Évian. Défendez nos couleurs par équipe ou testez-vous individuellement lors de nos tournois.</p>
+                    <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2'>
+                        <div class='bg-gradient-to-br from-tennis-green to-tennis-green-dark text-white p-6 rounded-xl shadow-lg relative overflow-hidden'>
+                            <div class='absolute -right-4 -bottom-4 text-optic-yellow opacity-20 text-7xl'><i class='fa-solid fa-trophy'></i></div>
+                            <i class='fa-solid fa-trophy text-4xl text-optic-yellow mb-4 block relative z-10'></i>
+                            <h4 class='font-bold text-xl mb-2 relative z-10'>Tournoi Open FFT</h4>
+                            <p class='text-sm text-gray-200 relative z-10'>Notre événement phare du printemps réunissant les meilleurs joueurs et joueuses de la région.</p>
+                        </div>
+                        <div class='flex flex-col gap-3 justify-center'>
+                            <div class='bg-gray-50 p-4 rounded-xl border border-gray-100 flex items-center gap-4 hover:-translate-y-1 transition-transform'>
+                                <i class='fa-solid fa-users text-2xl text-clay-red w-8 text-center'></i> 
+                                <span class='text-sm font-bold text-tennis-green-dark'>Championnats par équipe</span>
+                            </div>
+                            <div class='bg-gray-50 p-4 rounded-xl border border-gray-100 flex items-center gap-4 hover:-translate-y-1 transition-transform'>
+                                <i class='fa-solid fa-ranking-star text-2xl text-optic-yellow-hover w-8 text-center'></i> 
+                                <span class='text-sm font-bold text-tennis-green-dark'>Tournois internes (Loisir)</span>
+                            </div>
+                            <div class='bg-gray-50 p-4 rounded-xl border border-gray-100 flex items-center gap-4 hover:-translate-y-1 transition-transform'>
+                                <i class='fa-solid fa-medal text-2xl text-lake-blue w-8 text-center'></i> 
+                                <span class='text-sm font-bold text-tennis-green-dark'>Plateaux Galaxie (Jeunes)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`, 
+                link: "https://tenup.fft.fr/club/50740059/tournois", 
+                btnText: "Voir les tournois" 
+            },
+            partenaires: { 
+                title: "Recherche de partenaires", 
+                desc: `<div class='flex flex-col gap-4'>
+                    <p class='text-lg'>Vous cherchez quelqu'un avec qui jouer ? Le TC Évian facilite les rencontres entre passionnés de tous niveaux.</p>
+                    <div class='bg-gray-50 p-8 rounded-xl text-center border border-gray-100 mt-2 shadow-inner'>
+                        <div class='flex justify-center gap-2 mb-6'>
+                            <div class='w-14 h-14 bg-tennis-green text-white rounded-full flex items-center justify-center text-2xl shadow-lg z-10'><i class='fa-solid fa-user'></i></div>
+                            <div class='w-14 h-14 bg-clay-red text-white rounded-full flex items-center justify-center text-2xl shadow-lg -ml-4 z-20'><i class='fa-solid fa-user'></i></div>
+                        </div>
+                        <h4 class='font-bold text-tennis-green-dark text-xl mb-3'>Bourse aux partenaires Ten'Up</h4>
+                        <p class='text-gray-500'>Indiquez vos disponibilités et votre niveau (NC à Seconde Série) sur l'application, et trouvez instantanément des membres du club prêts à échanger la balle avec vous.</p>
+                    </div>
+                </div>`, 
+                link: "https://tenup.fft.fr/recherche/joueurs", 
+                btnText: "Trouver un joueur" 
+            },
+            cordage: { 
+                title: "Service Cordage (Atelier)", 
+                desc: `<div class='flex flex-col gap-4'>
+                    <p class='text-lg'>Confiez-nous votre raquette ! Déposez-la au club-house. Notre équipe vous conseillera sur la tension idéale et le cordage adapté à votre jeu.</p>
+                    <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2'>
+                        <div class='bg-white p-6 rounded-xl border-t-4 border-optic-yellow shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:-translate-y-2 transition-transform duration-300'>
+                            <div class='flex items-center gap-4 mb-4'>
+                                <div class='w-10 h-10 rounded-full bg-optic-yellow/20 text-optic-yellow-hover flex items-center justify-center text-xl shrink-0'><i class='fa-solid fa-feather'></i></div>
+                                <span class='font-bold text-tennis-green-dark text-xl'>Multifilament</span>
+                            </div>
+                            <p class='text-sm text-gray-600 leading-relaxed'>Souple et très confortable. Excellent pour générer de la puissance facilement et <span class='font-bold text-tennis-green'>protéger votre bras</span> (idéal pour le loisir, les jeunes ou en prévention des tendinites).</p>
+                        </div>
+                        <div class='bg-white p-6 rounded-xl border-t-4 border-clay-red shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:-translate-y-2 transition-transform duration-300'>
+                            <div class='flex items-center gap-4 mb-4'>
+                                <div class='w-10 h-10 rounded-full bg-clay-red/10 text-clay-red flex items-center justify-center text-xl shrink-0'><i class='fa-solid fa-dumbbell'></i></div>
+                                <span class='font-bold text-tennis-green-dark text-xl'>Monofilament</span>
+                            </div>
+                            <p class='text-sm text-gray-600 leading-relaxed'>Rigide et ultra-résistant. Conçu pour un <span class='font-bold text-clay-red'>contrôle absolu</span> et une prise d'effet maximale. Vivement conseillé aux frappeurs réguliers qui cassent souvent.</p>
+                        </div>
+                    </div>
+                </div>`, 
+                link: null, 
+                btnText: "J'ai compris, fermer" 
+            }
+        };
+
+        function openServiceModal(type) {
+            const modal = document.getElementById('service-modal');
+            const data = serviceData[type];
+            document.getElementById('sm-title').innerText = data.title;
+            document.getElementById('sm-desc').innerHTML = data.desc;
+            
+            const btn = document.getElementById('sm-btn');
+            if(data.link) {
+                btn.href = data.link;
+                btn.target = "_blank";
+                btn.innerText = data.btnText;
+                btn.onclick = null;
+            } else {
+                btn.removeAttribute('href');
+                btn.removeAttribute('target');
+                btn.innerText = data.btnText;
+                btn.onclick = function(e) { e.preventDefault(); closeServiceModal(); };
+            }
+            
+            modal.classList.remove('hidden');
+            // Timeout pour laisser le display:block s'appliquer avant l'animation d'opacité
+            setTimeout(() => { 
+                modal.classList.remove('opacity-0'); 
+                modal.firstElementChild.classList.remove('scale-95'); 
+            }, 10);
+        }
+        
+        function closeServiceModal() {
+            const modal = document.getElementById('service-modal');
+            modal.classList.add('opacity-0');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        // --- AVIS GOOGLE ---
+        const reviews = [
+            { name: "Julien M.", stars: 5, text: "Super club ! Les 9 courts en greenset sont top et l'ambiance avec vue sur le lac Léman est incroyable." },
+            { name: "Sophie L.", stars: 5, text: "Excellente ambiance, Boris et Benjamin sont top pour les enfants. Mon fils adore la Galaxie Tennis." },
+            { name: "Marc D.", stars: 4, text: "Très belles infrastructures. La bulle l'hiver est un vrai plus et la réservation sur Ten'Up est hyper pratique." },
+            { name: "Emma R.", stars: 5, text: "Un club où il fait bon jouer. Les nouveaux terrains de pickleball sont super sympas à tester !" },
+            { name: "Antoine P.", stars: 5, text: "Le meilleur club de la région. Stéphane et son comité font un super boulot, vivement le Padel !" },
+            { name: "Chloé B.", stars: 4, text: "Très bonne école. Les CQP Stagiaires (Nathan et Elodie) poussent les jeunes à se dépasser." },
+            { name: "Lucas T.", stars: 5, text: "Jouer avec cette vue sur le Léman et les Alpes, ça n'a pas de prix ! Le staff administratif est super dispo." }
+        ];
+
+        function displayRandomReviews() {
+            const shuffled = [...reviews].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 3);
+            const container = document.getElementById('reviews-container');
+            
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.innerHTML = '';
+                selected.forEach((rev, index) => {
+                    const starsHtml = '<i class="fas fa-star text-optic-yellow drop-shadow-md"></i>'.repeat(rev.stars) + '<i class="far fa-star text-gray-300"></i>'.repeat(5 - rev.stars);
+                    container.innerHTML += `
+                        <div class="custom-hover bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative hover:border-clay-red hover:-translate-y-1 transition-all duration-300 cursor-pointer" style="animation-delay: ${index * 100}ms">
+                            <div class="absolute top-6 right-6 text-gray-200 text-4xl"><i class="fa-solid fa-quote-right"></i></div>
+                            <div class="flex mb-4 text-sm">${starsHtml}</div>
+                            <p class="text-gray-600 mb-6 italic relative z-10 leading-relaxed">"${rev.text}"</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-tennis-green-dark text-white flex items-center justify-center font-bold">${rev.name.charAt(0)}</div>
+                                <div><div class="font-bold text-tennis-green-dark">${rev.name}</div><div class="text-xs text-gray-400">Il y a ${Math.floor(Math.random() * 4) + 1} mois</div></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.5s ease-in';
+            }, 300);
+        }
+        document.addEventListener('DOMContentLoaded', displayRandomReviews);
+
+
+        // --- SIMULATEUR MATCH DE TENNIS (Règles Réelles) ---
+        class TennisMatch {
+            constructor(id) {
+                this.id = id;
+                this.resetMatch();
+            }
+
+            resetMatch() {
+                this.setsP1 = [];
+                this.setsP2 = [];
+                this.p1Games = 0;
+                this.p2Games = 0;
+                this.p1Points = 0; 
+                this.p2Points = 0;
+                this.isTieBreak = false;
+                this.p1Tb = 0;
+                this.p2Tb = 0;
+                this.matchOver = false;
+                this.status = "";
+                if(this.id === 'c1') {
+                    this.setsP1.push(6); this.setsP2.push(4);
+                    this.p1Games = 4; this.p2Games = 5;
+                } else {
+                    this.setsP1.push(4); this.setsP2.push(6);
+                    this.p1Games = 2; this.p2Games = 1;
+                }
+                this.updateUI();
+            }
+
+            winPoint(player) {
+                if(this.matchOver) {
+                    setTimeout(() => this.resetMatch(), 5000);
+                    return;
+                }
+
+                if(this.isTieBreak) {
+                    if(player === 1) this.p1Tb++; else this.p2Tb++;
+                    if((this.p1Tb >= 7 || this.p2Tb >= 7) && Math.abs(this.p1Tb - this.p2Tb) >= 2) {
+                        this.winGame(this.p1Tb > this.p2Tb ? 1 : 2);
+                    }
+                } else {
+                    if(player === 1) {
+                        if(this.p1Points === 3 && this.p2Points < 3) this.winGame(1);
+                        else if(this.p1Points === 3 && this.p2Points === 3) this.p1Points = 4; // Av
+                        else if(this.p1Points === 3 && this.p2Points === 4) this.p2Points = 3; // Egalité
+                        else if(this.p1Points === 4) this.winGame(1);
+                        else this.p1Points++;
+                    } else {
+                        if(this.p2Points === 3 && this.p1Points < 3) this.winGame(2);
+                        else if(this.p2Points === 3 && this.p1Points === 3) this.p2Points = 4; // Av
+                        else if(this.p2Points === 3 && this.p1Points === 4) this.p1Points = 3; // Egalité
+                        else if(this.p2Points === 4) this.winGame(2);
+                        else this.p2Points++;
+                    }
+                }
+                this.updateUI();
+            }
+
+            winGame(player) {
+                if(player === 1) this.p1Games++; else this.p2Games++;
+                this.p1Points = 0; this.p2Points = 0;
+                this.p1Tb = 0; this.p2Tb = 0;
+                this.isTieBreak = false;
+
+                if((this.p1Games >= 6 || this.p2Games >= 6) && Math.abs(this.p1Games - this.p2Games) >= 2) {
+                    this.winSet();
+                } else if (this.p1Games === 7 || this.p2Games === 7) {
+                    this.winSet();
+                } else if (this.p1Games === 6 && this.p2Games === 6) {
+                    this.isTieBreak = true;
+                }
+            }
+
+            winSet() {
+                this.setsP1.push(this.p1Games);
+                this.setsP2.push(this.p2Games);
+                this.p1Games = 0;
+                this.p2Games = 0;
+
+                let p1SetsWon = 0, p2SetsWon = 0;
+                for(let i=0; i<this.setsP1.length; i++) {
+                    if(this.setsP1[i] > this.setsP2[i]) p1SetsWon++;
+                    else p2SetsWon++;
+                }
+
+                if(p1SetsWon === 2) { this.matchOver = true; this.status = "Victoire Joueur 1"; }
+                else if(p2SetsWon === 2) { this.matchOver = true; this.status = "Victoire Joueur 2"; }
+            }
+
+            getPointString(points) {
+                const map = ["0", "15", "30", "40", "Av"];
+                return map[points];
+            }
+
+            updateUI() {
+                let htmlP1 = "", htmlP2 = "";
+                for(let i=0; i<this.setsP1.length; i++) {
+                    let bold1 = this.setsP1[i] > this.setsP2[i] ? "text-white" : "text-gray-500 font-normal";
+                    let bold2 = this.setsP2[i] > this.setsP1[i] ? "text-white" : "text-gray-500 font-normal";
+                    htmlP1 += `<span class="${bold1}">${this.setsP1[i]}</span>`;
+                    htmlP2 += `<span class="${bold2}">${this.setsP2[i]}</span>`;
+                }
+                
+                if(!this.matchOver) {
+                    htmlP1 += `<span class="text-white">${this.p1Games}</span>`;
+                    htmlP2 += `<span class="text-white">${this.p2Games}</span>`;
+                }
+
+                document.getElementById(`${this.id}-p1-scores`).innerHTML = htmlP1;
+                document.getElementById(`${this.id}-p2-scores`).innerHTML = htmlP2;
+
+                let p1PtsDisplay = this.matchOver ? "" : (this.isTieBreak ? this.p1Tb : this.getPointString(this.p1Points));
+                let p2PtsDisplay = this.matchOver ? "" : (this.isTieBreak ? this.p2Tb : this.getPointString(this.p2Points));
+                
+                document.getElementById(`${this.id}-p1-points`).innerText = p1PtsDisplay;
+                document.getElementById(`${this.id}-p2-points`).innerText = p2PtsDisplay;
+                document.getElementById(`${this.id}-status`).innerText = this.status;
+            }
+        }
+
+        const match1 = new TennisMatch('c1');
+        const match2 = new TennisMatch('c2');
+
+        setInterval(() => {
+            if(Math.random() > 0.5) match1.winPoint(Math.random() > 0.5 ? 1 : 2);
+            if(Math.random() > 0.5) match2.winPoint(Math.random() > 0.5 ? 1 : 2);
+        }, 5000);
+
+    </script>
+</body>
+</html>
