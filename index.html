@@ -36,11 +36,16 @@
             overflow-x: hidden;
             cursor: none; 
         }
+
+        a, button, input, select, textarea, .custom-hover {
+            cursor: pointer; 
+        }
+
         h1, h2, h3, h4, .font-display {
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Curseur personnalisé */
+        /* Curseur personnalisé de base (Balle de tennis) */
         #custom-cursor {
             position: fixed;
             top: 0;
@@ -53,7 +58,7 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
             box-shadow: 0 0 10px rgba(223, 255, 0, 0.8);
         }
         #custom-cursor::before, #custom-cursor::after {
@@ -63,9 +68,21 @@
             height: 100%;
             border: 1px solid inherit;
             border-radius: 50%;
+            transition: opacity 0.2s ease;
         }
         #custom-cursor::before { left: -60%; }
         #custom-cursor::after { right: -60%; }
+
+        /* Effet au survol : la balle se concentre en un point d'impact lumineux (façon smash) */
+        #custom-cursor.cursor-hover {
+            transform: translate(-50%, -50%) scale(0.4);
+            background-color: #DFFF00;
+            border-color: #DFFF00;
+            box-shadow: 0 0 25px 12px rgba(223, 255, 0, 0.9);
+        }
+        #custom-cursor.cursor-hover::before, #custom-cursor.cursor-hover::after {
+            opacity: 0; /* Fait disparaître les lignes de la balle */
+        }
 
         /* Animations d'apparition (Scroll) */
         .reveal {
@@ -78,11 +95,16 @@
             transform: translateY(0);
         }
 
-        /* Hero Background Pattern + Dégradé Lac/Montagne */
+        /* Hero Background Pattern + Image + Dégradé Lac/Montagne */
         .hero-pattern {
-            background: linear-gradient(135deg, #0A5C36 0%, #042f1a 100%);
-            background-image: radial-gradient(rgba(223, 255, 0, 0.15) 1px, transparent 1px), linear-gradient(135deg, #0A5C36 0%, #005f73 100%);
-            background-size: 50px 50px, 100% 100%;
+            background-color: #042f1a;
+            background-image: 
+                radial-gradient(rgba(223, 255, 0, 0.15) 1px, transparent 1px), 
+                linear-gradient(135deg, rgba(10, 92, 54, 0.8) 0%, rgba(0, 95, 115, 0.9) 100%),
+                url('images/hero.jpg');
+            background-size: 50px 50px, 100% 100%, cover;
+            background-position: center, center, center;
+            background-repeat: repeat, no-repeat, no-repeat;
         }
 
         /* Patterns SVG discrets pour les sections (Balles et Raquettes) */
@@ -178,7 +200,7 @@
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-4xl mx-auto reveal">
-                <div class="inline-block bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-clay-red/50 text-optic-yellow font-semibold text-sm mb-6 uppercase tracking-wider shadow-[0_0_15px_rgba(224,79,54,0.3)]">
+                <div class="inline-block bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-optic-yellow/30 text-optic-yellow font-semibold text-sm mb-6 uppercase tracking-wider shadow-[0_0_15px_rgba(223,255,0,0.2)]">
                     Un cadre exceptionnel entre lac et montagnes
                 </div>
                 <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight">
@@ -284,7 +306,7 @@
                         • 9 terrains en Greenset classique<br>
                         • 1 terrain Synthétique / Sable<br>
                         <span class="text-optic-yellow font-semibold">+ 2 terrains de Pickleball</span><br>
-                        <span class="text-clay-red font-bold">Projet à venir : 2 à 3 pistes de Padel</span>
+                        <span class="bg-white/20 text-white px-2 py-1 rounded text-sm font-bold mt-1 inline-block shadow-sm">Projet à venir : 2 à 3 pistes de Padel</span>
                     </p>
                 </div>
                 <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 hover:border-clay-red transition-colors duration-300">
@@ -532,7 +554,7 @@
                     <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Greenset" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
                 </div>
                 <div class="relative group rounded-2xl overflow-hidden aspect-square custom-hover">
-                    <img src="https://scontent-mrs2-3.xx.fbcdn.net/v/t39.30808-6/474985951_1228106942135949_2967320381278710875_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=2a1932&_nc_ohc=I-o2ep4q4MoQ7kNvwHHZ1e7&_nc_oc=Adn7THIRdC4QE0jw7NdnHOwr4T9mRlSujnuItsyajZ5edm9V8KEYOp7_P3YeG0LaZJ0&_nc_zt=23&_nc_ht=scontent-mrs2-3.xx&_nc_gid=pZmxmscekdhIBp4NvdE1YA&oh=00_AfsgIIG0Q1T0pvVmT17L7njnlpaX1qZzuB5lUp_BDE0QUw&oe=699C3108" alt="École de tennis" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
+                    <img src="images/hero.jpg" alt="École de tennis" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
                 </div>
                 <div class="col-span-2 relative group rounded-2xl overflow-hidden aspect-[2/1] custom-hover">
                     <img src="https://images.unsplash.com/photo-1560012057-4372e14c5085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Club House" class="object-cover w-full h-full group-hover:scale-110 transition duration-700">
@@ -702,14 +724,10 @@
         const hoverElements = document.querySelectorAll('a, button, input, select, textarea, .custom-hover');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursor.style.backgroundColor = 'transparent';
-                cursor.style.borderColor = '#E04F36'; // Devient terre battue au survol
+                cursor.classList.add('cursor-hover');
             });
             el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursor.style.backgroundColor = '#DFFF00';
-                cursor.style.borderColor = '#042f1a';
+                cursor.classList.remove('cursor-hover');
             });
         });
 
